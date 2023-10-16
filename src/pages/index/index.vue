@@ -1,5 +1,7 @@
 <template>
-  <view class="index">
+
+<!---
+     <view class="index">
     <view>
       <img src="" alt="">
     </view>
@@ -10,7 +12,7 @@
     </view>
     <nut-toast :msg="msg2" v-model:visible="show" :type="type" :cover="cover"/>
 
-    <nut-row>
+      <nut-row>
         <nut-col :span="12">
           <div class="flex-content">span:12</div>
         </nut-col>
@@ -18,7 +20,44 @@
           <div class="flex-content flex-content-light">span:12</div>
         </nut-col>
       </nut-row>
+     </view>
+     -->
 
+
+    <view class="container">
+
+
+     <!-- start  tabbar -->
+    <view class="footer">
+     <nut-tabbar @tab-switch="tabSwitch">
+         <nut-tabbar-item tab-title="标签">
+           <template #icon>
+             <Home></Home>
+           </template>
+         </nut-tabbar-item>
+         <nut-tabbar-item tab-title="标签">
+           <template #icon>
+             <Category></Category>
+           </template>
+         </nut-tabbar-item>
+         <nut-tabbar-item tab-title="标签">
+           <template #icon>
+             <Find></Find>
+           </template>
+         </nut-tabbar-item>
+         <nut-tabbar-item tab-title="标签">
+           <template #icon>
+             <Cart></Cart>
+           </template>
+         </nut-tabbar-item>
+         <nut-tabbar-item tab-title="标签">
+           <template #icon>
+             <My></My>
+           </template>
+         </nut-tabbar-item>
+       </nut-tabbar>
+       </view>
+     <!-- end of tabbar -->
 
   </view>
 </template>
@@ -26,12 +65,19 @@
 <script>
 import { reactive, toRefs } from 'vue';
 import { Dongdong } from '@nutui/icons-vue-taro';
+import { Tabbar, TabbarItem } from '@nutui/nutui-taro';
 import Taro,{useRouter,getCurrentInstance} from '@tarojs/taro';
+import { Home, Category, Find, Cart, My } from '@nutui/icons-vue-taro';
 
 export default {
   name: 'Index',
   components: {
-    Dongdong
+    Dongdong,
+    Home,
+    Category,
+    Find,
+    Cart,
+    My
   },
   setup() {
     const state = reactive({
@@ -58,16 +104,43 @@ export default {
 
     };
 
+    const tabSwitch = (item, index) => {
+      console.log(item, index);
+    };
+
     return {
       ...toRefs(state),
       handleClick,
-      jump
+      jump,
+      tabSwitch
     }
   }
 }
 </script>
 
 <style lang="scss">
+
+.container {
+
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+
+}
+
+.footer {
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
+
+
+}
+
+
 .index {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
