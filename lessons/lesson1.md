@@ -56,7 +56,7 @@ sudo cnpm run build:weapp
 
 
 
-
+sudo cnpm i unplugin-vue-components -D
 
 
 
