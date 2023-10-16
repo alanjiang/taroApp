@@ -33,21 +33,28 @@ sudo cnpm run build:weapp
 
 
 
-# 5 效果 
+### 5 效果 
 
 
 
+视频演示。
 
 
 
+### 6 培训代码
 
-### 6 代码分支：
+先获取代码至本地：
 
-https://github.com/alanjiang/taroApp
+git clone https://github.com/alanjiang/taroApp
 
-tag: lesson3
+切换至相应的tag 
+
+git checkout lesson3
+
+
 
 ```
+提交记录
 git tag -a 'lesson3' -m '第3课小程序底部导航栏的优化，公共组件'
 
 git push --tags
