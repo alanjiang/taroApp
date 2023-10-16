@@ -4,15 +4,23 @@
 
    <nut-table :columns="columns" :data="data"></nut-table>
 
+    <MyTabbar :activeName="activeName" />
+
   </view>
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs, h } from 'vue';
+  import { ref,reactive, toRefs, h } from 'vue';
+  import MyTabbar from '../components/MyTabbar'
   export default {
-    props: {},
+    name: 'category',
+    components: {
+           MyTabbar
+      },
     setup() {
+
       const state = reactive({
+       activeName:  ref('category'),
         columns: [
           {
             title: '姓名',
@@ -58,15 +66,18 @@
           }
         ]
       });
+
+
       return {
         ...toRefs(state)
+
       };
+
+
     }
   };
 </script>
 
 <style lang="scss">
-
-
 
 </style>
