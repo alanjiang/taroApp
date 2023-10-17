@@ -1,12 +1,12 @@
 <template>
     <view class="container">
      <!-- start  tabbar -->
-    <view>
+
         <nut-tabbar v-model="props.activeName" @tab-switch="tabSwitch"   bottom safe-area-inset-bottom placeholder>
             <nut-tabbar-item v-for="(item, index) in list" :name="item.name" :tab-title="item.title" :icon="item.icon">
             </nut-tabbar-item>
           </nut-tabbar>
-    </view>
+
      <!-- end of tabbar -->
   </view>
 </template>
@@ -15,13 +15,13 @@
 import { h,ref, reactive, toRefs, defineProps } from 'vue';
 import { Tabbar, TabbarItem } from '@nutui/nutui-taro';
 import Taro, {useRouter,getCurrentInstance} from '@tarojs/taro';
-import { Home, Category, Find, Cart, My } from '@nutui/icons-vue-taro';
+import { Home, Category, Add, Cart, My } from '@nutui/icons-vue-taro';
 export default {
   name: 'Index',
   components: {
     Home,
     Category,
-    Find,
+    Add,
     Cart,
     My
 
@@ -46,9 +46,9 @@ export default {
                                            name: 'category'
                                          },
                                          {
-                                           title: '发现',
-                                           icon: h(Find),
-                                           name: 'find'
+                                           title: '收藏',
+                                           icon: h(Add),
+                                           name: 'add'
                                          },
                                          {
                                            title: '购物车',
@@ -61,40 +61,124 @@ export default {
                                            name: 'my'
                                          }
                                        ]});
+     const forward = (name) => {
 
-    const jump = () => {
+          const pages = Taro.getCurrentPages();
+          console.log('--->pages.length='+pages.length);
+          let route = '';
+          if ( name == 'category') {
+             route = 'pages/category/category'
+          }else if (name == 'home') {
+             route = 'pages/index/index'
+          }else if (name == 'cart') {
+             route = 'pages/cart/cart'
+          }else if (name == 'my') {
+             route = 'pages/my/my'
+          }else if (name == 'add') {
+              route = 'pages/add/add'
+          }
+          if ( pages.length > 0 ) {
+              pages.forEach( page => {
+                  console.log('--->page.route='+page.route);
+               } );
 
-          Taro.navigateTo({
-              url: '/pages/table/table',
-            });
+          }
 
-    };
+          let index =  pages.findIndex( (page, index) => page.route == route);
+          console.log('index='+index);
+          if (index != -1) {
 
-     const tabSwitch = (item, index) => {
-            console.log(item, index);
-            console.log('name='+item.name+',index='+index);
-            if (item.name == 'category') {
+              console.log('found the page in  Taro.getCurrentPages(),pages.length='+pages.length+',index='+index);
+              let delta =  pages.length - index;
+              console.log('--->delta='+delta);
 
-              Taro.redirectTo({
-                  url: '/pages/table/table',
+
+
+              if ( pages.length < 5) {
+
+                 if (pages[pages.length - 1].route == route ) {
+
+                     console.log('--->重复点击<----');
+
+                 }else{
+
+                    if (pages.length == 1) {
+
+                      Taro.navigateTo({
+                         url: '/'+route
+                       });
+                   }else{
+                      Taro.navigateBack({
+                          delta:  delta
+                      });
+                   }
+
+
+                 }
+
+
+
+              }else{
+                  Taro.navigateTo({
+                     url: '/'+route
+                  });
+              }
+          }else{
+              Taro.navigateTo({
+                  url: '/'+route
               });
 
-            }else if (item.name == 'home') {
+          }
 
-               Taro.redirectTo({
-                       url: '/pages/index/index',
-                 });
-            }
 
      };
 
+      const getRoute = (name) => {
 
+               const pages = Taro.getCurrentPages();
+               console.log('--->pages.length='+pages.length);
+               let route = '';
+               if ( name == 'category') {
+                  route = 'pages/category/category'
+               }else if (name == 'home') {
+                  route = 'pages/index/index'
+               }else if (name == 'cart') {
+                  route = 'pages/cart/cart'
+               }else if (name == 'my') {
+                  route = 'pages/my/my'
+               }else if (name == 'add') {
+                   route = 'pages/add/add'
+               }
+
+               return '/'+route;
+
+
+          };
+
+     const tabSwitch = (item, index) => {
+            console.log('--->activeName='+props.activeName);
+            console.log(item, index);
+            console.log('name='+item.name+',index='+index);
+            const pages = Taro.getCurrentPages();
+            if (pages.length < 5) {
+              Taro.navigateTo({
+                url: getRoute(item.name)
+              });
+            }else{
+
+               Taro.reLaunch({
+                  url: getRoute(item.name)
+                });
+            }
+
+
+     };
 
     return {
       ...toRefs(state),
       props,
-      tabSwitch,
-      jump
+      tabSwitch
+
 
 
     }
@@ -106,23 +190,15 @@ export default {
 
 .container {
 
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-
-}
-
-.footer {
-
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  left: 0;
-  right: 0;
-
+ // 加入该属性
+ // 兼容 ios 11.2 以下版本
+ padding-bottom: constant(safe-area-inset-bottom);
+ // 兼容 ios 11.2 以上版本
+ padding-bottom: env(safe-area-inset-bottom);
 
 }
+
+
 
 
 </style>

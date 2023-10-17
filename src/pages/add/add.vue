@@ -2,8 +2,7 @@
 
     <view class="container">
 
-     <view style="color: red; text-align: center;"> 首页 </view>
-
+     <view style="color: red; text-align: center;"> 收藏 </view>
 
      <!-- start  tabbar -->
     <view>
@@ -26,8 +25,12 @@ export default {
   },
   setup() {
 
-    const activeName = ref('home');
+    const activeName = ref('add');
+
+
     return {
+
+
       activeName
 
     }
@@ -42,6 +45,17 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+
+}
+
+.footer {
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  right: 0;
 
 
 }

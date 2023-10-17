@@ -1,7 +1,10 @@
 export default defineAppConfig({
   pages: [
-     'pages/table/table',
-     'pages/index/index'
+     'pages/index/index',
+     'pages/category/category',
+      'pages/cart/cart',
+      'pages/add/add',
+      'pages/my/my',
 
   ],
   window: {
