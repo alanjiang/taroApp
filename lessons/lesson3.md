@@ -49,7 +49,7 @@ git clone https://github.com/alanjiang/taroApp
 
 切换至相应的tag 
 
-git checkout lesson3
+git checkout lesson3.4
 
 
 
